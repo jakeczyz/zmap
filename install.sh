@@ -46,9 +46,14 @@ else
 fi
 
 $CMAKE -DWITH_JSON=OFF -DENABLE_LOG_TRACE=OFF -DWITH_REDIS=OFF -DWITH_MONGO=OFF -DRESPECT_INSTALL_PREFIX_CONFIG=ON . && make -j4 && sudo make install \
-&& \
-setcap cap_net_raw=ep `which zmap` \
-&& \
-echo "Installed zmap version is: `zmap -V`" >&2
+
+if which zmap &>/dev/null ; then
+    ZMAP=`which zmap`
+else
+    ZMAP=/usr/local/sbin/zmap
+fi
+
+setcap cap_net_raw=ep $ZMAP && \
+echo "Installed zmap version is: `$ZMAP -V`" >&2
 
 #EOF
