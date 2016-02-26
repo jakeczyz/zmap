@@ -16,6 +16,13 @@ exit_if_failed () {
     fi;
 }
 
+#use alternate, local cmake if exists
+if [ -f /usr/local/bin/cmake ]; then
+    CMAKE=/usr/local/bin/cmake
+else
+    CMAKE=`which cmake`
+fi
+
 if [[ "$OSTYPE" == "darwin"* ]]; then 
     OS="OSX"
     echo "This OS not yet supported by this script. Install manually."; exit 1
@@ -38,7 +45,7 @@ else
     echo "This OS not yet supported by this script. Install manually."; exit 1
 fi
 
-cmake -DWITH_JSON=OFF -DENABLE_LOG_TRACE=OFF -DWITH_REDIS=OFF -DWITH_MONGO=OFF -DRESPECT_INSTALL_PREFIX_CONFIG=ON . && make -j4 && sudo make install \
+$CMAKE -DWITH_JSON=OFF -DENABLE_LOG_TRACE=OFF -DWITH_REDIS=OFF -DWITH_MONGO=OFF -DRESPECT_INSTALL_PREFIX_CONFIG=ON . && make -j4 && sudo make install \
 && \
 setcap cap_net_raw=ep `which zmap` \
 && \
