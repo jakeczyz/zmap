@@ -45,7 +45,7 @@ else
     echo "This OS not yet supported by this script. Install manually."; exit 1
 fi
 
-$CMAKE -DWITH_JSON=OFF -DENABLE_LOG_TRACE=OFF -DWITH_REDIS=OFF -DWITH_MONGO=OFF -DRESPECT_INSTALL_PREFIX_CONFIG=ON . && make -j4 && sudo make install \
+$CMAKE -DWITH_JSON=ON -DENABLE_LOG_TRACE=OFF -DWITH_REDIS=OFF -DWITH_MONGO=OFF -DRESPECT_INSTALL_PREFIX_CONFIG=ON . && make -j4 && sudo make install \
 
 if which zmap &>/dev/null ; then
     ZMAP=`which zmap`
